@@ -1,0 +1,23 @@
+﻿@model HelloWorld.Models.ProjectViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+@{
+    var project = new ProjectViewModel()
+    {
+        Nazwa = "pierwszy Projekt",
+        Cena = 1000,
+    };
+
+}
+<ul class="list-group">
+    <li class="list-group-item">@project.Nazwa</li>
+    <li class="list-group-item">@project.Cena</li>
+    
+</ul>
+<h4></h4>
+<h4></h4>
+
+
