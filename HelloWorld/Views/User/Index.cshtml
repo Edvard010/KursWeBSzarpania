@@ -3,3 +3,11 @@
 }
 
 <h1>IndexUser</h1>
+
+<form asp-controller="User" asp-action="Edit" method="post">
+    <input name="FirstName" type="text" />
+
+    <button type="submit">Wyślij</button>
+</form>
+
+<a asp-controller="User" asp-action="Edit" asp-route-userId="11">Edit 11</a>
