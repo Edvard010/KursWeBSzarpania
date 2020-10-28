@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HelloWorld.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelloWorld.Controllers
 {
-    public class Project : Controller
+    public class ProjectController : Controller
     {
         public IActionResult Index()
         {
@@ -14,7 +15,12 @@ namespace HelloWorld.Controllers
         }
         public IActionResult Details()
         {
-            return View();
+            var project = new ProjectViewModel()
+            {
+                Cena = 1000,
+                Nazwa = "Projekt 1"
+            };
+            return View(project);
         }
     }
 }
