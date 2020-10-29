@@ -14,6 +14,13 @@ namespace HelloWorld.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult Edit(EditUserViewModel data)
         {
             return View();

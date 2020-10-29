@@ -1,9 +1,15 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Edit";
 }
 
 <h1>Edit</h1>
+
+<form asp-controller="User" asp-action="Edit" method="post">
+    <input name="FirstName" type="text" />
+    <input name="LastName" type="text" />
+
+    <button type="submit">Wyślij</button>
+</form>
 
 
 
