@@ -17,13 +17,23 @@ namespace HelloWorld.Controllers
         [HttpGet]
         public IActionResult Edit()
         {
-            return View();
+            var vm = new EditUserViewModel
+            {
+                FirstName = "Marek",
+                LastName = "Zając",
+                Age = 28,
+                Description = "opis",
+                Id = 11
+            };
+            return View(vm);
         }
 
         [HttpPost]
         public IActionResult Edit(EditUserViewModel data)
         {
-            return View();
+            return RedirectToAction("Index");
         }
+
+        
     }
 }

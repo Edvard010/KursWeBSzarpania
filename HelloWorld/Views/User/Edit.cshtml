@@ -1,15 +1,20 @@
-﻿@{
+﻿@model HelloWorld.Models.EditUserViewModel
+@{
     ViewData["Title"] = "Edit";
 }
 
 <h1>Edit</h1>
 
-<form asp-controller="User" asp-action="Edit" method="post">
-    <input name="FirstName" type="text" />
-    <input name="LastName" type="text" />
-
-    <button type="submit">Wyślij</button>
+<form method="post">
+    <input asp-for="Id"/>
+    <input asp-for="FirstName"/>
+    <input asp-for="LastName"/>
+    <input asp-for="Age"/>
+    <textarea asp-for="Description"></textarea>
+    
 </form>
+
+
 
 
 
