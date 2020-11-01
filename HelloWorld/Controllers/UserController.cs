@@ -22,6 +22,7 @@ namespace HelloWorld.Controllers
                 FirstName = "Marek",
                 LastName = "Zając",
                 Age = 28,
+                Password = "password",
                 Description = "opis",
                 Id = 11
             };
@@ -31,6 +32,10 @@ namespace HelloWorld.Controllers
         [HttpPost]
         public IActionResult Edit(EditUserViewModel data)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(data);
+            }
             return RedirectToAction("Index");
         }
 
