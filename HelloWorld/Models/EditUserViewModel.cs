@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,5 +31,7 @@ namespace HelloWorld.Models
 
         [Display(Name = "Opis")]
         public string Description { get; set; }
+
+        public IFormFile MyFile { get; set; }
     }
 }

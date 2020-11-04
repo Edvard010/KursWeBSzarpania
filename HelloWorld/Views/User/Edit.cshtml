@@ -5,7 +5,7 @@
 
 <h1>Edit</h1>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All">
 
     </div>
@@ -15,14 +15,19 @@
         <input asp-for="FirstName" class="form-control" />
         <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
 
     <input asp-for="Id" />
     @*<label asp-for="FirstName"></label>*@
     @*<span asp-validation-for="FirstName"></span>*@
     @*<input asp-for="FirstName" />*@
-    <label asp-for="LastName"></label>
+    @*<label asp-for="LastName"></label>*@
     @*<span asp-validation-for="LastName"></span>*@
-    <input asp-for="LastName" />
+    @*<input asp-for="LastName" />*@
     <label asp-for="Password"></label>
     @*<span asp-validation-for="Password"></span>*@
     <input asp-for="Password" />
@@ -31,6 +36,9 @@
     <label asp-for="Description"></label>
     <textarea asp-for="Description"></textarea>
     <button type="submit">Wyślij</button>
+
+    <input asp-for="MyFile" />
+
 </form>
 
 
