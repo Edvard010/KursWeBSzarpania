@@ -54,6 +54,9 @@ namespace HelloWorld
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{userId?}");
+                endpoints.MapControllerRoute(
+                    name: "test",
+                    pattern: "/Home");
             });
         }
     }

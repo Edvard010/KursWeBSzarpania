@@ -50,8 +50,7 @@ namespace HelloWorld.Controllers
             data.MyFile.CopyTo(new FileStream(filePath, FileMode.Create));
 
             return RedirectToAction("Index");
-        }
+        }       
 
-        
     }
 }
