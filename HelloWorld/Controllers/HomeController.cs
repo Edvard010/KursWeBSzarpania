@@ -6,38 +6,41 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using HelloWorld.Models;
-
+using HelloWorld.Models.Services;
 
 namespace HelloWorld.Controllers
 {
     public class HomeController : Controller
-        
+
     {
+        private UserService _userService;
         private AboutService _aboutService;
-        public HomeController(AboutService aboutService)
+        public HomeController(AboutService aboutService, UserService userService)
         {
             _aboutService = aboutService;
+            _userService = userService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var vm = new UsersListViewModel
+            {
+                Users = _userService.GetAll()
+            };
+        
+            return View(vm);
         }
         public IActionResult About()
         {
-            
+
             var vm = _aboutService.Create("Marek", "Zając");
             return View(vm);
         }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Remove(int id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            _userService.Remove(id);
+            return RedirectToAction("Index");
         }
-    }
+    }    
 }

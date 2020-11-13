@@ -1,4 +1,5 @@
-﻿@{
+﻿@model HelloWorld.Models.UsersListViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -13,3 +14,13 @@ tu ma być link do project/details   @*TO SIĘ WYŚWIETLA?*@
 <section>
     <a asp-area="" asp-controller="Register" asp-action="Index">Rejestracja</a>
 </section>
+
+@foreach (var user in Model.Users)
+{
+    <div>
+        <h2>@user.FirstName @user.LastName</h2>
+        <h3><a asp-controller="User" asp-action="Edit" asp-route-id="@user.Id">@user.Login</a></h3>
+        <a class="text-danger" asp-controller="Home" asp-action="Remove" asp-route-id="@user.Id">Usuń</a>
+    </div>
+
+}

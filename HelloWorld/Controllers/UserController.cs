@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HelloWorld.Models;
+using HelloWorld.Models.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,31 +12,17 @@ namespace HelloWorld.Controllers
 {
     public class UserController : Controller
     {
-        private IWebHostEnvironment _hostingEnvironment;
-        public UserController(IWebHostEnvironment hostingEnvironment)
+        private UserService _userService;
+        public UserController(UserService userService)
         {
-            _hostingEnvironment = hostingEnvironment;
+            _userService = userService;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            var vm = new EditUserViewModel
-            {
-                FirstName = "Marek",
-                LastName = "Zając",
-                Age = 28,
-                Password = "password",
-                Description = "opis",
-                Id = 11
-            };
+            var vm = _userService.GetToEdit(id);
             return View(vm);
         }
-
         [HttpPost]
         public IActionResult Edit(EditUserViewModel data)
         {
@@ -44,13 +31,11 @@ namespace HelloWorld.Controllers
                 return View(data);
             }
 
-            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
-            var filePath = Path.Combine(uploads, data.MyFile.FileName);
+            _userService.Update(data);
+            return RedirectToAction("Index", "Home");
 
-            data.MyFile.CopyTo(new FileStream(filePath, FileMode.Create));
+        }
 
-            return RedirectToAction("Index");
-        }       
 
     }
 }

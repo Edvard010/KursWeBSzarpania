@@ -7,17 +7,22 @@ using HelloWorld.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.IO.Enumeration;
+using HelloWorld.Models.Services;
 
 namespace HelloWorld.Controllers
 {
     public class RegisterController : Controller
     {
+        private UserService _userService;
         private IWebHostEnvironment _hostingEnvironment;
-        public RegisterController(IWebHostEnvironment hostingEnvironment)
+        public RegisterController(UserService userService, IWebHostEnvironment hostingEnvironment)
         {
+            _userService = userService;
             _hostingEnvironment = hostingEnvironment;
         }
+
         
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -34,11 +39,11 @@ namespace HelloWorld.Controllers
                 return View(data);
             }
 
-            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
-            var filePath = Path.Combine(uploads, data.Avatar.FileName);
+            //var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+            //var filePath = Path.Combine(uploads, data.Avatar.FileName);
 
-            data.Avatar.CopyTo(new FileStream(filePath, FileMode.Create));
-
+            //data.Avatar.CopyTo(new FileStream(filePath, FileMode.Create));
+            _userService.CreateUser(data.FirstName, data.LastName, data.Login, data.Password, data.AboutMe);
             return RedirectToRoute("test");
 
         }

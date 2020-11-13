@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HelloWorld.Models;
+using HelloWorld.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,6 +29,11 @@ namespace HelloWorld
             services.AddControllersWithViews();
 
             services.AddTransient<AboutService>();
+
+            services.AddDbContext<SzkolaDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("SzkolaConnection")));
+
+            services.AddTransient<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
