@@ -21,7 +21,19 @@ namespace HelloWorld.Models.Services
                 LastName = lastName,
                 Login = login,
                 Password = password,
-                AboutMe = aboutMe
+                AboutMe = aboutMe,
+                Address = new AddressEntity
+                {
+                    City = "Kraków",
+                    Street = "Kwiatowa 111",
+                    PostCode = "30-600"
+                },
+                Hobby = new List<HobbyEntity>
+                {
+                    new HobbyEntity { Name = "Enduro"},
+                    new HobbyEntity { Name = "DH"},
+                    new HobbyEntity { Name = "Trekking"},
+                }
             };
             _context.Users.Add(entity);
             _context.SaveChanges();

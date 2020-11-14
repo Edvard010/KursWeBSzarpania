@@ -18,5 +18,8 @@ namespace HelloWorld.Models.Entities
         [Required]
         public string Password { get; set; }
         public string AboutMe { get; set; }
+        public virtual AddressEntity Address { get; set; }
+        public virtual ICollection<HobbyEntity> Hobby { get; set; }
+        public virtual ICollection<UserProjectEntity> Projects { get; set; }
     }
 }

@@ -4,14 +4,16 @@ using HelloWorld.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HelloWorld.Migrations
 {
     [DbContext(typeof(SzkolaDbContext))]
-    partial class SzkolaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201114180837_AddHobby")]
+    partial class AddHobby
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,24 +62,6 @@ namespace HelloWorld.Migrations
                     b.ToTable("HobbyEntity");
                 });
 
-            modelBuilder.Entity("HelloWorld.Models.Entities.ProjectEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Projects");
-                });
-
             modelBuilder.Entity("HelloWorld.Models.Entities.UserEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -114,21 +98,6 @@ namespace HelloWorld.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("HelloWorld.Models.Entities.UserProjectEntity", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "ProjectId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("UserProjectEntity");
-                });
-
             modelBuilder.Entity("HelloWorld.Models.Entities.HobbyEntity", b =>
                 {
                     b.HasOne("HelloWorld.Models.Entities.UserEntity", null)
@@ -145,35 +114,9 @@ namespace HelloWorld.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("HelloWorld.Models.Entities.UserProjectEntity", b =>
-                {
-                    b.HasOne("HelloWorld.Models.Entities.UserEntity", "User")
-                        .WithMany("Projects")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HelloWorld.Models.Entities.ProjectEntity", "Project")
-                        .WithMany("Users")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("HelloWorld.Models.Entities.ProjectEntity", b =>
-                {
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("HelloWorld.Models.Entities.UserEntity", b =>
                 {
                     b.Navigation("Hobby");
-
-                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }
