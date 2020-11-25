@@ -1,7 +1,16 @@
-﻿@model int
+﻿@model HelloWorld.Models.EditUserViewModel
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "User Details";
 }
 
-<h1>Details: @Model</h1>
+<h1>User Details: </h1>
+
+<ul class="list-group">
+    <li class="list-group-item">Imie: @Model.FirstName</li>
+    <li class="list-group-item">Nazwisko: @Model.LastName</li>
+    <li class="list-group-item">O sobie: @Model.AboutMe</li>
+
+    
+
+</ul>
 

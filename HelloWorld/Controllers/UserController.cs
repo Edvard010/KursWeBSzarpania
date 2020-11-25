@@ -35,6 +35,12 @@ namespace HelloWorld.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var vm = _userService.GetToDetails(id);
+            return View(vm);
+        }
 
 
     }

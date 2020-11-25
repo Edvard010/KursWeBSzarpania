@@ -80,5 +80,17 @@ namespace HelloWorld.Models.Services
             _context.Update(user);
             _context.SaveChanges();
         }
+        public EditUserViewModel GetToDetails(int id)
+        {
+            var user = _context.Users.Find(id);
+            var vm = new EditUserViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                AboutMe = user.AboutMe
+            };
+            return vm;
+        }
     }
 }
