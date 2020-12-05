@@ -35,7 +35,12 @@ namespace HelloWorld.Models.Services
                     new HobbyEntity { Name = "Trekking"},
                 }
             };
+
+            var project = _context.Projects.Find(1);
+            entity.UserProject.Add(new UserProjectEntity { Project = project });
+
             _context.Users.Add(entity);
+
             _context.SaveChanges();
         }
         public IEnumerable<UsersListItemModel> GetAll()
@@ -53,7 +58,9 @@ namespace HelloWorld.Models.Services
         public void Remove(int id)
         {
             var user = _context.Users.Find(id);
+            
             _context.Users.Remove(user);
+                        
             _context.SaveChanges();
         }
 
@@ -80,15 +87,17 @@ namespace HelloWorld.Models.Services
             _context.Update(user);
             _context.SaveChanges();
         }
-        public EditUserViewModel GetToDetails(int id)
+        public UserDetailsViewModel GetToDetails(int Id) //nieważne czy jest id czy Id
         {
-            var user = _context.Users.Find(id);
-            var vm = new EditUserViewModel
+            var user = _context.Users.Find(Id);
+            
+            var vm = new UserDetailsViewModel
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                AboutMe = user.AboutMe
+                AboutMe = user.AboutMe,
+                
             };
             return vm;
         }

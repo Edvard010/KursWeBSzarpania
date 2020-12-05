@@ -12,18 +12,19 @@ namespace HelloWorld.Models
         public SzkolaDbContext(DbContextOptions options) : base(options) { }
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<ProjectEntity> Projects { get; set; }
+        public DbSet<UserProjectEntity> UserProject { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserProjectEntity>()
                 .HasKey(up => new { up.UserId, up.ProjectId });
             modelBuilder.Entity<UserProjectEntity>()
                 .HasOne(up => up.User)
-                .WithMany(up => up.Projects)
-                .HasForeignKey(up => up.ProjectId);
+                .WithMany(up => up.UserProject)
+                .HasForeignKey(up => up.UserId);
             modelBuilder.Entity<UserProjectEntity>()
                 .HasOne(up => up.Project)
-                .WithMany(up => up.Users)
-                .HasForeignKey(up => up.UserId);
+                .WithMany(up => up.UserProject)
+                .HasForeignKey(up => up.ProjectId);
         }
     }
 }

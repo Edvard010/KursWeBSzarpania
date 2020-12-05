@@ -2,7 +2,7 @@
 
 namespace HelloWorld.Migrations
 {
-    public partial class AddProjects : Migration
+    public partial class projects : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,7 +21,7 @@ namespace HelloWorld.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserProjectEntity",
+                name: "UserProject",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
@@ -29,31 +29,31 @@ namespace HelloWorld.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserProjectEntity", x => new { x.UserId, x.ProjectId });
+                    table.PrimaryKey("PK_UserProject", x => new { x.UserId, x.ProjectId });
                     table.ForeignKey(
-                        name: "FK_UserProjectEntity_Projects_UserId",
-                        column: x => x.UserId,
+                        name: "FK_UserProject_Projects_ProjectId",
+                        column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserProjectEntity_Users_ProjectId",
-                        column: x => x.ProjectId,
+                        name: "FK_UserProject_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserProjectEntity_ProjectId",
-                table: "UserProjectEntity",
+                name: "IX_UserProject_ProjectId",
+                table: "UserProject",
                 column: "ProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserProjectEntity");
+                name: "UserProject");
 
             migrationBuilder.DropTable(
                 name: "Projects");

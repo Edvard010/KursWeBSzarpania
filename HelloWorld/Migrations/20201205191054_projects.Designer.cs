@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HelloWorld.Migrations
 {
     [DbContext(typeof(SzkolaDbContext))]
-    [Migration("20201114185115_AddProjects")]
-    partial class AddProjects
+    [Migration("20201205191054_projects")]
+    partial class projects
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -128,7 +128,7 @@ namespace HelloWorld.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("UserProjectEntity");
+                    b.ToTable("UserProject");
                 });
 
             modelBuilder.Entity("HelloWorld.Models.Entities.HobbyEntity", b =>
@@ -149,14 +149,14 @@ namespace HelloWorld.Migrations
 
             modelBuilder.Entity("HelloWorld.Models.Entities.UserProjectEntity", b =>
                 {
-                    b.HasOne("HelloWorld.Models.Entities.UserEntity", "User")
-                        .WithMany("Projects")
+                    b.HasOne("HelloWorld.Models.Entities.ProjectEntity", "Project")
+                        .WithMany("UserProject")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HelloWorld.Models.Entities.ProjectEntity", "Project")
-                        .WithMany("Users")
+                    b.HasOne("HelloWorld.Models.Entities.UserEntity", "User")
+                        .WithMany("UserProject")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -168,14 +168,14 @@ namespace HelloWorld.Migrations
 
             modelBuilder.Entity("HelloWorld.Models.Entities.ProjectEntity", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("UserProject");
                 });
 
             modelBuilder.Entity("HelloWorld.Models.Entities.UserEntity", b =>
                 {
                     b.Navigation("Hobby");
 
-                    b.Navigation("Projects");
+                    b.Navigation("UserProject");
                 });
 #pragma warning restore 612, 618
         }

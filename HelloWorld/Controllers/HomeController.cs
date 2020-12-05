@@ -15,10 +15,12 @@ namespace HelloWorld.Controllers
     {
         private UserService _userService;
         private AboutService _aboutService;
-        public HomeController(AboutService aboutService, UserService userService)
+        private ProjectService _projectService;
+        public HomeController(AboutService aboutService, UserService userService, ProjectService projectService)
         {
             _aboutService = aboutService;
             _userService = userService;
+            _projectService = projectService;
         }
 
         public IActionResult Index()
@@ -40,6 +42,11 @@ namespace HelloWorld.Controllers
         public IActionResult Remove(int id)
         {
             _userService.Remove(id);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Project()
+        {
+            _projectService.Create();
             return RedirectToAction("Index");
         }
     }    
