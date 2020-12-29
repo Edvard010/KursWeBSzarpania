@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HelloWorld.Models;
+using HelloWorld.Models.Entities;
 using HelloWorld.Models.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +36,14 @@ namespace HelloWorld
 
             services.AddDbContext<SzkolaDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("SzkolaConnection")));
-
+            services.AddIdentity<CustomUser, IdentityRole>()
+                .AddEntityFrameworkStores<SzkolaDbContext>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
+            services.ConfigureApplicationCookie(o =>
+            {
+                o.LoginPath = new PathString("/User/Login");
+            });
             services.AddTransient<UserService>();
             services.AddTransient<ProjectService>();
         }
@@ -55,6 +66,7 @@ namespace HelloWorld
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

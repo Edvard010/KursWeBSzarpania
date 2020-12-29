@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.Models
 {
-    public class UsersListViewModel
+    public class NoteViewModel
     {
-        public IEnumerable<UserListItemViemModel> Users { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
     }
 }

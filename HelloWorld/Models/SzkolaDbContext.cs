@@ -1,4 +1,5 @@
 ﻿using HelloWorld.Models.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.Models
 {
-    public class SzkolaDbContext : DbContext
+    public class SzkolaDbContext : IdentityDbContext<CustomUser>
     {
         public SzkolaDbContext(DbContextOptions options) : base(options) { }
         public DbSet<UserEntity> Users { get; set; }
@@ -15,6 +16,8 @@ namespace HelloWorld.Models
         public DbSet<UserProjectEntity> UserProject { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<UserProjectEntity>()
                 .HasKey(up => new { up.UserId, up.ProjectId });
             modelBuilder.Entity<UserProjectEntity>()

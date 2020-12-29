@@ -1,4 +1,6 @@
 ﻿using HelloWorld.Models.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,48 +11,28 @@ namespace HelloWorld.Models.Services
     public class UserService
     {
         private SzkolaDbContext _context;
+        
         public UserService(SzkolaDbContext context)
         {
             _context = context;
+         
         }
         public void CreateUser(string firstName, string lastName, string login, string password, string aboutMe)
         {
-            var entity = new UserEntity
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Login = login,
-                Password = password,
-                AboutMe = aboutMe,
-                Address = new AddressEntity
-                {
-                    City = "Kraków",
-                    Street = "Kwiatowa 111",
-                    PostCode = "30-600"
-                },
-                Hobby = new List<HobbyEntity>
-                {
-                    new HobbyEntity { Name = "Enduro"},
-                    new HobbyEntity { Name = "DH"},
-                    new HobbyEntity { Name = "Trekking"},
-                }
-            };
 
-            var project = _context.Projects.Find(1);
-            entity.UserProject.Add(new UserProjectEntity { Project = project });
-
-            _context.Users.Add(entity);
-
-            _context.SaveChanges();
         }
-        public IEnumerable<UsersListItemModel> GetAll()
+        public IEnumerable<UserListItemViemModel> GetAll()
         {
-            var users = _context.Users.Select(x => new UsersListItemModel
-            {
+            var users = _context.Users
+                .Include(x => x.UserProject)
+                .ThenInclude(x => x.Project)
+                .Select(x => new UserListItemViemModel
+                {
                 Id = x.Id,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                Login = x.Login
+                Login = x.Login,
+                Projects = x.UserProject.Select(p => p.Project.Name)
             }).ToList();
             return users;
         }

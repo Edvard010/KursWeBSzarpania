@@ -17,9 +17,17 @@ tu ma być link do project/details:   @*TO SIĘ WYŚWIETLA?*@
 {
     <div>
         <h2>@user.FirstName @user.LastName</h2>
+        <ul>
+            @foreach (var project in user.Projects)
+            {
+                <li>@project</li>
+            }
+
+        </ul>
         <h3><a asp-controller="User" asp-action="Edit" asp-route-id="@user.Id">Edit User</a></h3>
         <h4><a asp-controller="User" asp-action="Details" asp-route-id="@user.Id">@user.Login</a></h4> @*przejście do wyświetlania user details*@
         <a class="text-danger" asp-controller="Home" asp-action="Remove" asp-route-id="@user.Id">Delete User</a>
     </div>
+
 
 }

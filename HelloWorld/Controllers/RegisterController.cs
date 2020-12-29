@@ -8,25 +8,28 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.IO.Enumeration;
 using HelloWorld.Models.Services;
+using Microsoft.AspNetCore.Identity;
+using HelloWorld.Models.Entities;
 
 namespace HelloWorld.Controllers
 {
     public class RegisterController : Controller
     {
         private UserService _userService;
-        private IWebHostEnvironment _hostingEnvironment;
-        public RegisterController(UserService userService, IWebHostEnvironment hostingEnvironment)
+        private UserManager<CustomUser> _userManager;
+
+        public RegisterController(UserService userService, UserManager<CustomUser> userManager)
         {
             _userService = userService;
-            _hostingEnvironment = hostingEnvironment;
+            _userManager = userManager;
         }
 
-        
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Index(RegisterViewModel data)
         {
@@ -34,18 +37,34 @@ namespace HelloWorld.Controllers
             {
                 ModelState.AddModelError("ConfirmPassword", "Hasła nie są takie same");
             }
+
             if (!ModelState.IsValid)
             {
                 return View(data);
             }
 
-            //var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
-            //var filePath = Path.Combine(uploads, data.Avatar.FileName);
+            var entity = new CustomUser
+            {
+                UserName = data.Login,
+                AboutMe = data.AboutMe,
+                FirstName = data.FirstName,
+                LastName = data.LastName,
+                                
+            };
 
-            //data.Avatar.CopyTo(new FileStream(filePath, FileMode.Create));
-            _userService.CreateUser(data.FirstName, data.LastName, data.Login, data.Password, data.AboutMe);
-            return RedirectToRoute("test");
+            var result = _userManager.CreateAsync(entity, data.Password).Result;
 
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(data);
         }
     }
 }
